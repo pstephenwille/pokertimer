@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Texas Hold'em Timer</title>
+<link rel="stylesheet" type="text/css" href="mainStyle_ie.css" />
+<script type="text/javascript" src="js/timer5.js" charset="utf-8"></script>
+<script type="text/javascript">
+window.onload = function()
+{
+	/* set everything up; delcare and initialize any default values; the app is ready.  */
+	psw.initVars();
+}
+
+
+</script>
+</head>
+
+<body>
+
+    
+	<div id="sBlind" class="sBlind">00</div>
+    <div id="bBlind" class="bBlind">00</div>
+
+
+    
+	<div id="timer">
+        <ul>
+            <li id="minutes">00</li>
+            <li class="colon">:</li>
+          	<li id="seconds">00</li>
+          	<li class="colon">:</li>
+            <li id="nthSec">00</li>
+        </ul>
+</div>
+    
+    
+        <br />
+    <div id="timerBtns">
+        <button id="startStop" onmousedown="psw.startStopTimer()" onmouseup="window.focus()">Start/Stop</button>
+        <button id="reset" onmousedown="psw.resetTimer()" onmouseup="window.focus()">Reset</button>
+    </div>   
+    
+    <div id="roundCount">round...</div>
+    
+    <div class="changeBlindsBtns"><span>Increase/Decrease blinds</span>
+    	<button id="upBlinds" onmousedown="psw.upBlinds()" onmouseup="window.focus()">+</button>
+        <button id="downBlinds" onmousedown="psw.downBlinds()" onmouseup="window.focus()">-</button>
+	</div>
+    
+    <form action="#" class="form">
+        <label for="startBlind">plz enter the starting amount for the small blind.
+            <input id="startBlind" type="text" size="10" maxlength="4" value="5" onkeyup="psw.setGameParams()" onblur="window.focus()"/>
+        </label>
+
+        <label for="roundTime">plz enter the number of minutes for ea round.
+            <input id="roundTime" type="text" size="10" maxlength="8" value="20" onkeyup="psw.setGameParams()" onblur="window.focus()"/>
+        </label>
+    </form>
+
+ 	<p id="footer"></p>
+</body>
+</html>
