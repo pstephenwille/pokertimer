@@ -9,4 +9,3 @@ then auto increments the blinds.
 Spacebar toggles start/stop.
 
 Working example:
-http://pstephenwille.com/poker/index.html
