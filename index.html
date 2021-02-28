@@ -19,7 +19,7 @@
 <body>
 
 <audio id="alarm">
-    <source src="audio/calvary-charge.mp3">
+    <source src="audio/calvary-charge.mp3" type="audio/mpeg">
 </audio>
 
 <div id="blindsWrapper">
@@ -69,12 +69,12 @@
     </label>
     <br/>
     <label for="roundTime">
-        <span class="instructions">Enter the number of minutes for ea round.</span>
+        <span class="instructions">Enter the number of minutes for each round.</span>
         <input id="roundTime"
                type="text"
                size="5"
                maxlength="8"
-               value="20"
+               value="15"
                onkeyup="psw.setGameParams()"
                onblur="window.focus()"/>
     </label>

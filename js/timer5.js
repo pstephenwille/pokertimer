@@ -30,7 +30,7 @@ psw =
     };
 
 /* get the dom elements */
-psw.initVars = function() {
+psw.initVars = function () {
     psw.divSec = document.getElementById('seconds');
     psw.divMin = document.getElementById('minutes');
     psw.divNthSec = document.getElementById('nthSec');
@@ -45,11 +45,14 @@ psw.initVars = function() {
 
     psw.setGameParams();
 
-    document.getElementById('alarm').addEventListener('ended', () => psw.startStopTimer());
+    document.getElementById('alarm').addEventListener('ended', (foo) => {
+        console.log('%c...ended', 'color:gold', foo)
+        psw.startStopTimer();
+    });
 };
 
 /* get user entered values which set the small blind and round time */
-psw.setGameParams = function() {
+psw.setGameParams = function () {
     psw.roundCount = 0;
     var digits = /^\d*$/;
     var _strAmount = psw.startAmount.value.replace(/ /g, '');
@@ -65,8 +68,7 @@ psw.setGameParams = function() {
         psw.sBlind.innerHTML = (psw.smallB < 10) ? '0' + psw.smallB : psw.smallB;
         psw.bBlind.innerHTML = ((psw.smallB * 2) < 10) ? '0' + (psw.smallB * 2) : psw.smallB * 2;
         psw.startAmount.value = psw.step;
-    }
-    else {
+    } else {
         psw.startAmount.style.backgroundColor = '#D00';
         psw.startAmount.value = _strAmount;
     }
@@ -82,8 +84,7 @@ psw.setGameParams = function() {
 
         psw.roundTime.style.backgroundColor = '#090';
         psw.roundTime.value = _rndTime;
-    }
-    else {
+    } else {
         psw.roundTime.style.backgroundColor = '#D00';
         psw.roundTime.value = _rndTime;
     }
@@ -107,16 +108,14 @@ psw.setGameParams = function() {
  *	psw.resetTimer()
  *	1 - user called function to null out game params. this unlocks the input fields, allowing the user to re-enter blind
  *	and round time amounts, and start a new game with different params. */
-psw.startStopTimer = function() {
+psw.startStopTimer = function () {
 
-    if (psw.roundCount == 0) { psw.setGameParams(); }
-    else {//if 'timer' exists, it is running. clearing it effectively pauses the clock.
+    if (psw.roundCount == 0) { psw.setGameParams(); } else {//if 'timer' exists, it is running. clearing it effectively pauses the clock.
         if (psw.timer != null) {
             clearInterval(psw.timer);
             psw.timer = null;
             psw.startBtn.style.backgroundColor = '#090';
-        }
-        else if (psw.timer == null) {
+        } else if (psw.timer == null) {
             psw.startBtn.style.backgroundColor = '#D00';
             psw.roundTime.disabled = true;
             psw.startAmount.disabled = true;
@@ -125,7 +124,7 @@ psw.startStopTimer = function() {
         }
     }
 };
-psw.startTimer = function() {
+psw.startTimer = function () {
 
     if (psw.timer != null) {
         psw.minutes = (psw.tick % 10 == 0 && psw.totalSec % 60 == 0) ? --psw.minutes : psw.minutes;
@@ -153,24 +152,24 @@ psw.startTimer = function() {
     psw.divNthSec.innerHTML = (psw.nthSec < 10) ? '0' + psw.nthSec : psw.nthSec;
     psw.divMin.innerHTML = (psw.minutes < 10) ? '0' + psw.minutes : psw.minutes;
 };
-psw.resetTimer = function() {
+psw.resetTimer = function () {
+    psw.stopSound();
     clearInterval(psw.timer);
 
     psw.roundTime.disabled = false;
     psw.startAmount.disabled = false;
-    psw.divMin.innerHTML = '00';
-    psw.divSec.innerHTML = '00';
-    psw.divNthSec.innerHTML = '00';
-    psw.sBlind.innerHTML = '00';
-    psw.bBlind.innerHTML = '00';
-    psw.seconds = 0;
+    psw.divMin.innerHTML =
+        psw.divSec.innerHTML =
+            psw.divNthSec.innerHTML =
+                psw.sBlind.innerHTML =
+                    psw.bBlind.innerHTML = '00';
     psw.secondsTmp = 60;
-    psw.totalSec = 0;
-    psw.minutes = 0;
-    psw.nthSec = 0;
-    psw.tick = 0;
-    psw.roundCount = 0;
-    psw.step = 0;
+    psw.seconds =
+        psw.totalSec =
+            psw.minutes =
+                psw.nthSec =
+                    psw.tick =
+                        psw.roundCount = psw.step = 0;
     psw.divRndCount.innerHTML = 'round...' + psw.roundCount;
     psw.startBtn.style.backgroundColor = '#090';
 
@@ -180,13 +179,13 @@ psw.resetTimer = function() {
 };
 
 /* increment round counter, add up the blinds, play the new round alarm, and reset timer, for a new round */
-psw.newRound = function() {
-    psw.tick = 0;
-    psw.nthSec = 0;
-    psw.seconds = 0;
+psw.newRound = function () {
+    psw.tick =
+        psw.nthSec =
+            psw.seconds =
+                psw.totalSec =
+                    psw.minutes = 0;
     psw.secondsTmp = 60;
-    psw.totalSec = 0;
-    psw.minutes = 0;
     psw.step = parseInt(psw.step);
 
     psw.roundCount++;
@@ -210,11 +209,10 @@ psw.newRound = function() {
     psw.divRndCount.innerHTML = 'round...' + psw.roundCount;
 
     psw.playSound();
-
 };
 
 /* allows user to manually increase/decrease the displayed blind amounts, during game play */
-psw.upBlinds = function() {
+psw.upBlinds = function () {
     var _sb = null;
     var _bb = null;
 
@@ -231,15 +229,14 @@ psw.upBlinds = function() {
         psw.sBlind.innerHTML = ((_sb + psw.stepHolder) < 10) ? '0' + (_sb + psw.stepHolder) : (_sb + psw.stepHolder);
         psw.bBlind.innerHTML =
             (((_sb + psw.stepHolder) * 2) < 10) ? '0' + ((_sb + psw.stepHolder) * 2) : ((_sb + psw.stepHolder) * 2);
-    }
-    else {
+    } else {
         psw.sBlind.innerHTML = _sb;
         psw.bBlind.innerHTML = (_sb * 2);
     }
     psw.smallB = Math.abs(psw.sBlind.innerHTML);
 
 };
-psw.downBlinds = function() {
+psw.downBlinds = function () {
 
     /* get current blind amounts */
     var _sb = Math.abs(psw.sBlind.innerHTML);
@@ -256,8 +253,7 @@ psw.downBlinds = function() {
             (((_sb - psw.stepHolder) * 2) < 10) ? '0' + ((_sb - psw.stepHolder) * 2) : ((_sb - psw.stepHolder) * 2);
 
         smallB = Math.abs(psw.sBlind.innerHTML);
-    }
-    else if (_bb <= 0) {
+    } else if (_bb <= 0) {
         psw.sBlind.innerHTML = null;
         psw.bBlind.innerHTML = null;
 
@@ -270,13 +266,16 @@ psw.downBlinds = function() {
 };
 
 /* new round alarm; plays trumpet sound */
-psw.playSound = function() {
+psw.playSound = function () {
     document.getElementById('alarm').play();
 };
 
+psw.stopSound = () => {
+    document.getElementById('alarm').pause();
+};
 /* users can hit the spacebar to pause the timer, at any time during the game */
-psw.spaceBarPause = function() {
-    window.onkeyup = function(e) {
+psw.spaceBarPause = function () {
+    window.onkeyup = function (e) {
         if (e.keyCode === 32) { psw.startStopTimer(); }
     };
 }();
